@@ -51,7 +51,6 @@ video.addEventListener('play', () => {
          .then((result) => {})
          .catch((result) => {});
 
-
        }
        
       

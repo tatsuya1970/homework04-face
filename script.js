@@ -26,7 +26,10 @@ video.addEventListener('play', () => {
   send_obniz = 0
 
   setInterval(async () => {
-    const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceExpressions()
+    //１つの顔だけなのでfaceapi.detectSingleFaceを利用、全ての顔を検出するにはfaceapi.detectAllFaces
+    const detections = await faceapi.detectSingleFace(video, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceExpressions()
+    //const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceExpressions()
+    
     const resizedDetections = faceapi.resizeResults(detections, displaySize)
     canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height)
     faceapi.draw.drawDetections(canvas, resizedDetections)
@@ -34,6 +37,7 @@ video.addEventListener('play', () => {
 
     faceapi.draw.drawFaceExpressions(canvas, resizedDetections)
 
+    console.debug("resizedDetections",resizedDetections)
     if (resizedDetections[0] != null) {
 
        let disgusted = resizedDetections[0].expressions.disgusted
@@ -53,7 +57,7 @@ video.addEventListener('play', () => {
 
          //obnizクラウドへPOST
          if (send_obniz == 1){
-          send_obniz = ０
+          send_obniz = 0
           let value=[{"value":fan_status}];
           const url="https://obniz.io/events/1366/OlHhTPjhOYsk_xCAkojp5xrojyaJKR_9/run"; //ここにobnizのURLを入力
  

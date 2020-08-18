@@ -28,12 +28,13 @@ video.addEventListener('play', () => {
     // faceapi.draw.drawFaceLandmarks(canvas, resizedDetections)
 
     faceapi.draw.drawFaceExpressions(canvas, resizedDetections)
-    if (resizedDetections[0] == null){console.debug("resizeDetections: null")}
-    else{console.debug("resizeDetections",resizedDetections[0].expressions)}
     
-
-    // expressions: FaceExpressions 
-    // 
+    if (resizedDetections[0] == null) {
+      console.debug("resizeDetections: null")
+     }else{
+       console.debug("resizeDetections",resizedDetections[0].expressions)
+      }
+     
   }, 1000)
 
 })

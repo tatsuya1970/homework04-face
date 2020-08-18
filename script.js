@@ -53,6 +53,7 @@ video.addEventListener('play', () => {
 
          //obnizクラウドへPOST
          if (send_obniz == 1){
+          send_obniz = ０
           let value=[{"value":fan_status}];
           const url="https://obniz.io/events/1366/OlHhTPjhOYsk_xCAkojp5xrojyaJKR_9/run"; //ここにobnizのURLを入力
  

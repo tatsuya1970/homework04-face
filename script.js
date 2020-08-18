@@ -26,9 +26,8 @@ video.addEventListener('play', () => {
   send_obniz = 0
 
   setInterval(async () => {
-    //１つの顔だけなのでfaceapi.detectSingleFaceを利用、全ての顔を検出するにはfaceapi.detectAllFaces
-    const detection = await faceapi.detectSingleFace(video, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceExpressions()
-    //const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceExpressions()
+    //１つの顔だけなのでfaceapi.detectAllFacesではなくて detectSingleFaceでよいはずが、本件はdetectAllFacesを使った。
+    const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceExpressions()
     
     const resizedDetections = faceapi.resizeResults(detections, displaySize)
     canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height)
@@ -46,10 +45,12 @@ video.addEventListener('play', () => {
        
        console.debug("neutral",neutral,"happy",happy)
 
+       //表情がニュートラルじゃないときに扇風機をつける
        if (fan_status == 0 && neutral < 0.9) {
          fan_status = 1
          send_obniz = 1
         }
+        //表情がハッピーのときに扇風機を消す
         if (fan_status == 1 && happy > 0.5) {
           fan_status = 0
           send_obniz = 1

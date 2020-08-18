@@ -30,11 +30,13 @@ video.addEventListener('play', () => {
     faceapi.draw.drawFaceExpressions(canvas, resizedDetections)
 
     if (resizedDetections[0] != null) {
-       console.debug("sad",resizedDetections[0].expressions.sad)
-       //let disgusted = resizedDetections[0].expressions.disgusted
 
-       //FaceExpressions {neutral: 0.8571630120277405, happy: 0.0009491919190622866, sad: 0.0713937059044838, angry: 0.06651019304990768, fearful: 0.0018031822983175516, …}
-      //  FaceExpressions {neutral: 0.9998452663421631, happy: 9.013033377414104e-7, sad: 0.0000016673717482262873, angry: 0.00003788969843299128, fearful: 1.1844626390811186e-9, …}
+       let disgusted = resizedDetections[0].expressions.disgusted
+       let happy = resizedDetections[0].expressions.happy
+       
+       console.debug("disgusted",disgusted,"happy",happy)
+       
+       //  FaceExpressions {neutral: 0.9998452663421631, happy: 9.013033377414104e-7, sad: 0.0000016673717482262873, angry: 0.00003788969843299128, fearful: 1.1844626390811186e-9, …}
       //  angry: 0.00003788969843299128
       //  disgusted:
       //  6.673845476257156

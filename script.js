@@ -33,8 +33,9 @@ video.addEventListener('play', () => {
 
        let disgusted = resizedDetections[0].expressions.disgusted
        let happy = resizedDetections[0].expressions.happy
+       let neutral = resizedDetections[0].expressions.neutral
        
-       console.debug("disgusted",disgusted,"happy",happy)
+       console.debug("neutral",neutral,"disgusted",disgusted,"happy",happy)
        
        //  FaceExpressions {neutral: 0.9998452663421631, happy: 9.013033377414104e-7, sad: 0.0000016673717482262873, angry: 0.00003788969843299128, fearful: 1.1844626390811186e-9, …}
       //  angry: 0.00003788969843299128

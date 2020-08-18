@@ -39,24 +39,25 @@ video.addEventListener('play', () => {
        let happy = resizedDetections[0].expressions.happy
        let neutral = resizedDetections[0].expressions.neutral
        
-       console.debug("neutral",neutral,"disgusted",disgusted,"happy",happy)
+       console.debug("neutral",neutral,"happy",happy)
 
        if (fan_status == 0 && neutral < 0.9) {
          fan_status = 1
+        }
+        if (fan_status == 1 && happy > 0.5) {
+          fan_status = 0
+         }
+
          //obnizクラウドへPOST
-        let value=[{"value":"1"}];
+        let value=[{"value":fan_status}];
         const url="https://obniz.io/events/1366/OlHhTPjhOYsk_xCAkojp5xrojyaJKR_9/run"; //ここにobnizのURLを入力
  
         Promise.all(post(value,url))   
          .then((result) => {})
          .catch((result) => {});
-
-       }
-       
-      
+       }  
       }
-
-    
+  
   }, 1000)
 
 })

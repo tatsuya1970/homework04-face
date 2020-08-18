@@ -30,7 +30,7 @@ video.addEventListener('play', () => {
     faceapi.draw.drawFaceExpressions(canvas, resizedDetections)
 
     if (resizedDetections[0] != null) {
-       console.debug("resizeDetections",resizedDetections[0].expressions.FaceExpressions)
+       console.debug("resizeDetections",resizedDetections[0].expressions)
        //let disguested = resizedDetections[0].expressions.disguested
       }
      

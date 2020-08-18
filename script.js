@@ -27,7 +27,7 @@ video.addEventListener('play', () => {
 
   setInterval(async () => {
     //１つの顔だけなのでfaceapi.detectSingleFaceを利用、全ての顔を検出するにはfaceapi.detectAllFaces
-    const detections = await faceapi.detectSingleFace(video, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceExpressions()
+    const detection = await faceapi.detectSingleFace(video, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceExpressions()
     //const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceExpressions()
     
     const resizedDetections = faceapi.resizeResults(detections, displaySize)

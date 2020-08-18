@@ -15,11 +15,15 @@ function startVideo() {
   )
 }
 
+
 video.addEventListener('play', () => {
   const canvas = faceapi.createCanvasFromMedia(video)
   document.body.append(canvas)
   const displaySize = { width: video.width, height: video.height }
   faceapi.matchDimensions(canvas, displaySize)
+
+  fan_status = 0;
+
   setInterval(async () => {
     const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceExpressions()
     const resizedDetections = faceapi.resizeResults(detections, displaySize)
@@ -36,26 +40,34 @@ video.addEventListener('play', () => {
        let neutral = resizedDetections[0].expressions.neutral
        
        console.debug("neutral",neutral,"disgusted",disgusted,"happy",happy)
+
+       if (fan_status == 0 && neutral < 0.9) {
+         fan_status = 1
+         //obnizクラウドへPOST
+        let value=[{"value":"1"}];
+        const url="https://obniz.io/events/1366/OlHhTPjhOYsk_xCAkojp5xrojyaJKR_9/run"; //ここにobnizのURLを入力
+ 
+        Promise.all(post(value,url))   
+         .then((result) => {})
+         .catch((result) => {});
+
+
+       }
        
-       //  FaceExpressions {neutral: 0.9998452663421631, happy: 9.013033377414104e-7, sad: 0.0000016673717482262873, angry: 0.00003788969843299128, fearful: 1.1844626390811186e-9, …}
-      //  angry: 0.00003788969843299128
-      //  disgusted:
-      //  6.673845476257156
-      //  e-9
-      //  fearful:
-      //  1.1844626390811186
-      //  e-9
-      //  happy:
-      //  9.013033377414104
-      //  e-7
-      //  neutral: 0.9998452663421631
-      //  sad: 0.0000016673717482262873
-      //  surprised: 0.00011418635403970256
+      
       }
 
-     
-
-
+    
   }, 1000)
 
 })
+
+//POST通信  ここのを丸写し　https://www.it-swarm.dev/ja/javascript/%E3%83%95%E3%82%A9%E3%83%BC%E3%83%A0%E3%81%AA%E3%81%97%E3%81%A7post%E3%83%87%E3%83%BC%E3%82%BF%E3%82%92%E9%80%81%E4%BF%A1%E3%81%99%E3%82%8B%E7%B4%94%E7%B2%8B%E3%81%AAjavascript/972618857/
+function post(value,url) {
+  let xhr = new XMLHttpRequest();
+  xhr.open("POST", url, true);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.send(JSON.stringify({
+    value: value
+  }));
+}

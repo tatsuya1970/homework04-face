@@ -22,7 +22,8 @@ video.addEventListener('play', () => {
   const displaySize = { width: video.width, height: video.height }
   faceapi.matchDimensions(canvas, displaySize)
 
-  fan_status = 0;
+  fan_status = 0
+  send_obniz = 0
 
   setInterval(async () => {
     const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceExpressions()
@@ -43,20 +44,24 @@ video.addEventListener('play', () => {
 
        if (fan_status == 0 && neutral < 0.9) {
          fan_status = 1
+         send_obniz = 1
         }
         if (fan_status == 1 && happy > 0.5) {
           fan_status = 0
+          send_obniz = 1
          }
 
          //obnizクラウドへPOST
-        let value=[{"value":fan_status}];
-        const url="https://obniz.io/events/1366/OlHhTPjhOYsk_xCAkojp5xrojyaJKR_9/run"; //ここにobnizのURLを入力
+         if (send_obniz == 1){
+          let value=[{"value":fan_status}];
+          const url="https://obniz.io/events/1366/OlHhTPjhOYsk_xCAkojp5xrojyaJKR_9/run"; //ここにobnizのURLを入力
  
-        Promise.all(post(value,url))   
-         .then((result) => {})
-         .catch((result) => {});
-       }  
-      }
+          Promise.all(post(value,url))   
+           .then((result) => {})
+           .catch((result) => {});
+         
+         }  
+    }
   
   }, 1000)
 

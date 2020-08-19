@@ -46,7 +46,7 @@ video.addEventListener('play', () => {
          send_obniz = 1
         }
         //表情がハッピーのときに扇風機を消す
-        if (fan_status == 1 && happy > 0.5) {
+        if (fan_status == 1 && happy > 0.3) {
           fan_status = 0
           send_obniz = 1
          }

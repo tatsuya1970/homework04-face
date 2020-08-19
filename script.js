@@ -15,7 +15,6 @@ function startVideo() {
   )
 }
 
-
 video.addEventListener('play', () => {
   const canvas = faceapi.createCanvasFromMedia(video)
   document.body.append(canvas)
@@ -32,14 +31,10 @@ video.addEventListener('play', () => {
     const resizedDetections = faceapi.resizeResults(detections, displaySize)
     canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height)
     faceapi.draw.drawDetections(canvas, resizedDetections)
-    // faceapi.draw.drawFaceLandmarks(canvas, resizedDetections)
-
     faceapi.draw.drawFaceExpressions(canvas, resizedDetections)
 
     console.debug("resizedDetections",resizedDetections)
     if (resizedDetections[0] != null) {
-
-       let disgusted = resizedDetections[0].expressions.disgusted
        let happy = resizedDetections[0].expressions.happy
        let neutral = resizedDetections[0].expressions.neutral
        
@@ -60,12 +55,11 @@ video.addEventListener('play', () => {
          if (send_obniz == 1){
           send_obniz = 0
           let value=[{"value":fan_status}];
-          const url="https://obniz.io/events/1366/OlHhTPjhOYsk_xCAkojp5xrojyaJKR_9/run"; //ここにobnizのURLを入力
+          const url="https://obniz.com/events/1367/JezcL147Cl7eO2LONBDZqEBUpGCZf0HN/run"; //ここにobnizのURLを入力
  
           Promise.all(post(value,url))   
            .then((result) => {})
-           .catch((result) => {});
-         
+           .catch((result) => {})       
          }  
     }
   
